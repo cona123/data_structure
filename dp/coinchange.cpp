@@ -1,35 +1,33 @@
 #include<iostream>
 #include<vector>
+#include<memory>
 using namespace std;
-int get_coin_num(int goal_num,vector<int>& coins)
+int get_coin_num(int goal_num, vector<int>& coins)
 {
-	int *sum=new int[goal_num+1];
-	sum[0] = 0;
+	//unique_ptr<int[]> dp(new int[goal_num+1]);
+	auto dp(make_unique<int[]>(goal_num+1));
+	dp[0] = 0;
 	for(int i = 1 ; i != goal_num + 1 ; i++)
 	{
 		int minnum = i;
-		sum[i] = i;
+		dp[i] = i;
 		for(auto j : coins)
 		{
-			if(i >= coins[j]) {
-				minnum = min (minnum , sum[i-coins[j]] + 1 );
+			if(i >= coins[j])
+            {
+				minnum = min (minnum , dp[i-coins[j]] + 1 );
 			}
 		}
-		sum[i] = minnum;
+		dp[i] = minnum;
 	}
-	int ret = sum[goal_num];
-	delete[] sum;
-	return ret;
+	return dp[goal_num];
 }
 
 int main()
 {
-	vector<int> coins;
-	coins.push_back(1);
-	coins.push_back(2);
-	coins.push_back(7);
-	cout<<get_coin_num(23, coins)<<endl;
-	cout<<get_coin_num(50, coins)<<endl;
-	cout<<get_coin_num(100, coins)<<endl;
+    vector<int> coins = {1, 2, 7};
+	cout << get_coin_num(23, coins)<<endl;
+	cout << get_coin_num(50, coins)<<endl;
+	cout << get_coin_num(100, coins)<<endl;
 }
 

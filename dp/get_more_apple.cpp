@@ -4,20 +4,26 @@
 using namespace std;
 int get_more_apple(int length, int width, vector<vector<int> > apple_number )
 {
-	for(auto i:apple_number)
+	for(auto& i:apple_number)
 	{
-		for(auto j:i)
+		for(auto& j:i)
 		{
-			cout<<j<<" ";
+			cout << j << endl;
 		}
-		cout<<endl;
 	}
-	int **apple_number_sum;
+	//int **apple_number_sum;
+	auto_ptr<auto_ptr<int> > apple_number_sum=new auto_ptr<auto_ptr<int[length]> >;
+	for(int i = 0 ; i != length ; i++)
+	{
+		apple_number_sum[i]=new auto_ptr<int>[width];
+	}
+	/*
 	apple_number_sum = new int*[length];
 	for(int i = 0 ; i != length ; i++)
 	{
 		apple_number_sum[i] = new int[width];
 	}
+	*/
 	for (int i = 0 ; i != length ; i++)
 	{
 		for (int j = 0 ; j != width ; j++)
@@ -38,13 +44,14 @@ int get_more_apple(int length, int width, vector<vector<int> > apple_number )
 			}
 		}
 	}
-	int ret = apple_number_sum[length-1][width-1];
+	/*int ret = apple_number_sum[length-1][width-1];
 	for (int i = 0 ; i != length ; i++)
 	{
 		delete[] apple_number_sum[i];
 	}
 	delete[] apple_number_sum;
-	return ret;
+	return ret;*/
+	return apple_number_sum[length-1][width-1];
 }
 
 int main()
